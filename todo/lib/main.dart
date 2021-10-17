@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo/network/todo_client.dart';
+import 'package:get/get.dart';
 import 'package:todo/repositories/user/profile_repository.dart';
-import 'package:todo/repositories/user/user_manager.dart';
+import 'instance_manager.dart';
 
 void main() async {
-  await UserManager.instance.init();
+  await InstanceManager.instance.init();
   runApp(MyApp());
 }
 

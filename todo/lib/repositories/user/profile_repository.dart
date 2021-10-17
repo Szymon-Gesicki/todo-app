@@ -1,9 +1,7 @@
-import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
-
-import 'package:http_parser/http_parser.dart';
+import 'package:get/get.dart';
 import 'package:todo/network/models/login_request.dart';
 import 'package:todo/network/models/register_request.dart';
 import 'package:todo/network/todo_api/todo_api.dart';
@@ -28,20 +26,19 @@ class SimpleResult<T> {
 }
 
 class ProfileRepository {
+  final UserManager _userManager = Get.find();
+
   final _logOutBroadcast = StreamController<void>.broadcast();
   Stream<void> get logOutBroadcast => _logOutBroadcast.stream;
 
-  static final instance = ProfileRepository._inner();
+  TodoApi _todoApi = Get.find<TodoClient>().todoApi;
 
-  final userManager = UserManager.instance;
-  TodoApi _todoApi = TodoClient.instance.todoApi;
-
-  ProfileRepository._inner() {}
+  ProfileRepository();
 
   Future<SimpleResult<void>> login(String username, String password) async {
     try {
       final response = await _todoApi.login(LoginRequest(username, password));
-      userManager.saveAuthToken(response.key);
+      _userManager.saveAuthToken(response.key);
       return SimpleResult.createEmptySuccess();
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
@@ -61,7 +58,7 @@ class ProfileRepository {
     try {
       final response = await _todoApi
           .register(RegisterRequest(username, email, password, password));
-      userManager.saveAuthToken(response.key);
+      _userManager.saveAuthToken(response.key);
       return SimpleResult.createEmptySuccess();
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {

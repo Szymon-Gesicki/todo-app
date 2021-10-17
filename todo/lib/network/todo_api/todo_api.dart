@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:todo/network/models/login_request.dart';

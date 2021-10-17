@@ -2,7 +2,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorage {
   static const KEY_AUTH_TOKEN = "KEY_AUTH_TOKEN";
-  static SecureStorage instance = SecureStorage();
   FlutterSecureStorage _secureStorage = new FlutterSecureStorage();
   String? _cachedToken;
 

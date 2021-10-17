@@ -1,14 +1,15 @@
+import 'package:get/get.dart';
 import 'package:todo/repositories/user/secure_storage.dart';
 
 class UserManager {
-  static final UserManager instance = UserManager._inner();
-
   String? _token;
 
-  UserManager._inner();
+  UserManager() {
+    init();
+  }
 
   Future<void> init() async {
-    _token = await SecureStorage.instance.getAuthToken();
+    _token = await Get.find<SecureStorage>().getAuthToken();
   }
 
   bool isLoggedIn() {
@@ -21,6 +22,6 @@ class UserManager {
 
   void saveAuthToken(String? token) async {
     this._token = token;
-    await SecureStorage.instance.saveAuthToken(token);
+    await Get.find<SecureStorage>().saveAuthToken(token);
   }
 }

@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:todo/network/http_response.dart';
 import 'package:todo/network/todo_api/todo_api.dart';
 import 'package:todo/repositories/user/profile_repository.dart';
@@ -10,12 +9,12 @@ import 'package:todo/repositories/user/user_manager.dart';
 import 'network_urls.dart';
 
 class TodoClient {
-  static final instance = TodoClient._inner();
+  final UserManager _userManager = Get.find();
 
   final Dio dio = Dio(BaseOptions(baseUrl: NetworkUrls.SERVER_API));
   late TodoApi todoApi;
 
-  TodoClient._inner() {
+  TodoClient() {
     todoApi = TodoApi(dio);
 
     dio.interceptors.add(
@@ -26,7 +25,7 @@ class TodoClient {
 
           switch (httpResponse) {
             case HTTPResponse.unauthorized:
-              ProfileRepository.instance.logout();
+              Get.find<ProfileRepository>().logout();
               break;
             default:
               break;
@@ -35,7 +34,7 @@ class TodoClient {
           handler.next(e);
         },
         onRequest: (r, handler) {
-          final token = UserManager.instance.getAuthToken();
+          final token = _userManager.getAuthToken();
           if (token != null) r.headers['Authorization'] = token;
           handler.next(r);
         },
