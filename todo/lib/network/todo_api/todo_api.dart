@@ -15,7 +15,7 @@ abstract class TodoApi {
   @POST("api/login/")
   Future<LoginResponse> login(@Body() LoginRequest request);
 
-  @GET("api/registration/")
+  @POST("api/registration/")
   Future<LoginResponse> register(@Body() RegisterRequest request);
 
   @GET("api/task/")

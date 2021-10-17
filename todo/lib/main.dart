@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:todo/network/todo_client.dart';
 import 'package:todo/repositories/user/profile_repository.dart';
+import 'package:todo/repositories/user/user_manager.dart';
 
-void main() {
+void main() async {
+  await UserManager.instance.init();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -74,4 +74,8 @@ class ProfileRepository {
       return SimpleResult.createFailed("unknown_error");
     }
   }
+
+  void logout() {
+    _logOutBroadcast.add(null);
+  }
 }

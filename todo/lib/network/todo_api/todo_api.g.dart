@@ -25,7 +25,6 @@ class _TodoApi implements TodoApi {
                 .compose(_dio.options, 'api/login/',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-
     final value = LoginResponse.fromJson(_result.data!);
     return value;
   }
@@ -38,7 +37,7 @@ class _TodoApi implements TodoApi {
     _data.addAll(request.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<LoginResponse>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
                 .compose(_dio.options, 'api/registration/',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));

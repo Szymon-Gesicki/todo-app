@@ -12,10 +12,16 @@ class SecureStorage {
     try {
       _cachedToken = await _secureStorage.read(key: KEY_AUTH_TOKEN);
     } catch (e) {
-      // https://github.com/mogol/flutter_secure_storage/issues/43
-      await _secureStorage.deleteAll();
+      await deleteAll();
     }
     return _cachedToken;
+  }
+
+  Future deleteAll() async {
+    try {
+      // https://github.com/mogol/flutter_secure_storage/issues/43
+      await _secureStorage.deleteAll();
+    } catch (e) {}
   }
 
   Future<void> saveAuthToken(String? token) async {
