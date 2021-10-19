@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo/ui/style/colors.dart';
 import 'package:todo/ui/widgets/app_bar_widget.dart';
+import 'package:todo/ui/widgets/input_widget.dart';
 import 'package:todo/ui/widgets/primary_button.dart';
+import '../locale_keys.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,17 +12,26 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _loginController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Column(
-        children: [
-          AppBarWidget(),
-          Expanded(
-            child: _body(),
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints:
+              BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              AppBarWidget(),
+              Expanded(child: _body()),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -30,31 +41,62 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.only(right: 10.0),
-            child: SvgPicture.asset(
-              "assets/images/get_started.svg",
-            ),
-          ),
-          SizedBox(height: 16),
           Text(
-            "Let's get thinkgs done on time",
+            LocaleKeys.welcomeBack,
             textAlign: TextAlign.center,
             style:
                 Theme.of(context).textTheme.headline6!.copyWith(fontSize: 20),
           ),
-          SizedBox(height: 16),
-          Text(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tellus praesent purus tincidunt ut cursus vitae. Nisl, vitae nulla lectus tortor, est a aliquam. Pretium netus ",
-            textAlign: TextAlign.center,
-            style:
-                Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20),
+          SizedBox(height: 32),
+          Container(
+            margin: const EdgeInsets.only(right: 10.0),
+            child: SvgPicture.asset(
+              "assets/images/login.svg",
+            ),
           ),
-          Spacer(flex: 1),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InputWidget(
+                  controller: _loginController,
+                  type: InputWidgetType.login,
+                ),
+                SizedBox(height: 32),
+                InputWidget(
+                  controller: _passwordController,
+                  type: InputWidgetType.password,
+                ),
+              ],
+            ),
+          ),
           PrimaryButton(
-            text: "Get Started",
+            text: LocaleKeys.singIn,
             onPressed: () {},
             large: true,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                LocaleKeys.dontHaveAccount,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontSize: 15),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  LocaleKeys.signUp,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(fontSize: 15, color: AppColors.primaryColor),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 32),
         ],

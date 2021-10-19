@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:todo/repositories/user/profile_repository.dart';
-import 'package:todo/ui/login_screen.dart';
+import 'package:todo/ui/splash/splash_screen.dart';
+import 'package:todo/ui/style/app_theme.dart';
 import 'instance_manager.dart';
 
 void main() async {
@@ -15,10 +14,8 @@ class TodoApp extends StatelessWidget {
     return MaterialApp(
       title: 'Todo app',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: LoginScreen(),
+      theme: appTheme,
+      home: SplashScreen(),
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:todo/network/models/login_request.dart';
 import 'package:todo/network/models/login_response.dart';
 import 'package:todo/network/models/register_request.dart';
 import 'package:todo/network/models/task_model.dart';
+import 'package:todo/network/models/user_model.dart';
 
 part 'todo_api.g.dart';
 
@@ -26,4 +27,7 @@ abstract class TodoApi {
   @PATCH("api/task/{id}/")
   Future<LoginResponse> updateTask(
       @Path("id") String id, @Body() TaskModel request);
+
+  @GET("api/user/")
+  Future<UserModel> getProfile();
 }

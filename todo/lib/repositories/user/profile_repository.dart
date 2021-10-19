@@ -72,6 +72,25 @@ class ProfileRepository {
     }
   }
 
+  Future<SimpleResult<void>> getProfile(
+      String username, String password, String email) async {
+    try {
+      final response = await _todoApi
+          .profile(RegisterRequest(username, email, password, password));
+      _userManager.saveAuthToken(response.key);
+      return SimpleResult.createEmptySuccess();
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        return SimpleResult.createFailed("failure_on_register");
+      }
+
+      if (e.error is SocketException) {
+        return SimpleResult.createFailed("error_check_internet");
+      }
+      return SimpleResult.createFailed("unknown_error");
+    }
+  }
+
   void logout() {
     _logOutBroadcast.add(null);
   }
