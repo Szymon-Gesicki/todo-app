@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:todo/models/user.dart';
 import 'package:todo/network/models/login_request.dart';
 import 'package:todo/network/models/register_request.dart';
 import 'package:todo/network/todo_api/todo_api.dart';
@@ -34,6 +35,11 @@ class ProfileRepository {
   TodoApi _todoApi = Get.find<TodoClient>().todoApi;
 
   ProfileRepository();
+
+  bool isLoggedIn() {
+    final token = Get.find<UserManager>().getAuthToken();
+    return (token != null);
+  }
 
   Future<SimpleResult<void>> login(String username, String password) async {
     try {
@@ -72,21 +78,11 @@ class ProfileRepository {
     }
   }
 
-  Future<SimpleResult<void>> getProfile(
-      String username, String password, String email) async {
+  Future<SimpleResult<User>> getProfile() async {
     try {
-      final response = await _todoApi
-          .profile(RegisterRequest(username, email, password, password));
-      _userManager.saveAuthToken(response.key);
-      return SimpleResult.createEmptySuccess();
+      final response = await _todoApi.getProfile();
+      return SimpleResult.createSuccess(UserMapper.fromNetwork(response));
     } on DioError catch (e) {
-      if (e.response?.statusCode == 401) {
-        return SimpleResult.createFailed("failure_on_register");
-      }
-
-      if (e.error is SocketException) {
-        return SimpleResult.createFailed("error_check_internet");
-      }
       return SimpleResult.createFailed("unknown_error");
     }
   }

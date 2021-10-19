@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo/ui/home/home_screen.dart';
+import 'package:todo/ui/register_screen.dart';
 import 'package:todo/ui/style/colors.dart';
 import 'package:todo/ui/widgets/app_bar_widget.dart';
 import 'package:todo/ui/widgets/input_widget.dart';
@@ -72,7 +74,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           PrimaryButton(
             text: LocaleKeys.singIn,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => HomeScreen()));
+            },
             large: true,
           ),
           Row(
@@ -86,7 +91,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     .copyWith(fontSize: 15),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => RegisterScreen()));
+                },
                 child: Text(
                   LocaleKeys.signUp,
                   textAlign: TextAlign.center,
