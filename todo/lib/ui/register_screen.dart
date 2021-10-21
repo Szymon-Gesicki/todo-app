@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:todo/ui/style/colors.dart';
 import 'package:todo/ui/widgets/app_bar_widget.dart';
 import 'package:todo/ui/widgets/input_widget.dart';
@@ -92,7 +93,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     .copyWith(fontSize: 15),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
                 child: Text(
                   "Sing in",
                   textAlign: TextAlign.center,

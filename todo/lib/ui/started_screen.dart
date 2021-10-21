@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:todo/ui/login_screen.dart';
 import 'package:todo/ui/style/colors.dart';
 import 'package:todo/ui/widgets/app_bar_widget.dart';
@@ -66,7 +67,6 @@ class _StartedScreenState extends State<StartedScreen> {
   }
 
   void onFinished() {
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()));
+    Get.off(() => LoginScreen());
   }
 }

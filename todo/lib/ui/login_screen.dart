@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:todo/ui/home/home_screen.dart';
 import 'package:todo/ui/register_screen.dart';
 import 'package:todo/ui/style/colors.dart';
@@ -75,8 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
           PrimaryButton(
             text: LocaleKeys.singIn,
             onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => HomeScreen()));
+              Get.off(() => HomeScreen());
             },
             large: true,
           ),
@@ -92,8 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => RegisterScreen()));
+                  Get.to(() => RegisterScreen());
                 },
                 child: Text(
                   LocaleKeys.signUp,

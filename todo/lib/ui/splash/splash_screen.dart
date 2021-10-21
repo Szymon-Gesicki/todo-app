@@ -26,10 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
     final keysController = Get.find<KeysController>();
 
     if (keysController.finishedOnboarding) {
-      Get.to(() => loggedIn ? HomeScreen() : LoginScreen());
+      Get.off(() => loggedIn ? HomeScreen() : LoginScreen());
     } else {
       keysController.finishedOnboarding = true;
-      Get.to(() => StartedScreen());
+      Get.off(() => StartedScreen());
     }
   }
 
