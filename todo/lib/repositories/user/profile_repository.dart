@@ -8,6 +8,7 @@ import 'package:todo/network/models/register_request.dart';
 import 'package:todo/network/todo_api/todo_api.dart';
 import 'package:todo/network/todo_client.dart';
 import 'package:todo/repositories/user/user_manager.dart';
+import 'package:todo/ui/login/login_screen.dart';
 
 class SimpleResult<T> {
   final bool success;
@@ -89,5 +90,7 @@ class ProfileRepository {
 
   void logout() {
     _logOutBroadcast.add(null);
+    _userManager.saveAuthToken(null);
+    Get.off(() => LoginScreen());
   }
 }

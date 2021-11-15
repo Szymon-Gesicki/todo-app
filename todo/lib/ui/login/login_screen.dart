@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/locale_keys.dart';
 import 'package:todo/ui/home/home_screen.dart';
-import 'package:todo/ui/register_screen.dart';
+import 'package:todo/ui/login/login_controller.dart';
+import 'package:todo/ui/register/register_screen.dart';
 import 'package:todo/ui/style/colors.dart';
 import 'package:todo/ui/widgets/app_bar_widget.dart';
 import 'package:todo/ui/widgets/input_widget.dart';
 import 'package:todo/ui/widgets/primary_button.dart';
-import '../locale_keys.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -15,9 +17,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _loginController = TextEditingController();
-  final _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +30,14 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               AppBarWidget(),
-              Expanded(child: _body()),
+              ChangeNotifierProvider<LoginController>(
+                create: (context) => LoginController(),
+                child: Consumer<LoginController>(
+                  builder: (context, controller, child) {
+                    return Expanded(child: _body(controller));
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -39,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _body() {
+  Widget _body(LoginController controller) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -62,12 +68,12 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InputWidget(
-                  controller: _loginController,
+                  controller: controller.loginController,
                   type: InputWidgetType.login,
                 ),
                 SizedBox(height: 32),
                 InputWidget(
-                  controller: _passwordController,
+                  controller: controller.passwordController,
                   type: InputWidgetType.password,
                 ),
               ],
@@ -75,8 +81,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           PrimaryButton(
             text: LocaleKeys.singIn,
-            onPressed: () {
-              Get.off(() => HomeScreen());
+            onPressed: () async {
+              if (await controller.login()) Get.off(() => HomeScreen());
             },
             large: true,
           ),

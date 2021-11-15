@@ -6,8 +6,8 @@ import 'package:todo/repositories/user/profile_repository.dart';
 import 'package:todo/repositories/user/secure_storage.dart';
 import 'package:todo/repositories/user/user_manager.dart';
 
-class InstanceManager {
-  static final instance = InstanceManager();
+class DependencyManager {
+  static final instance = DependencyManager();
 
   Future init() async {
     Get.put(StorageService());

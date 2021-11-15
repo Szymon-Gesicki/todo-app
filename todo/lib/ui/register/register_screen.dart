@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/ui/home/home_screen.dart';
+import 'package:todo/ui/login/login_controller.dart';
+import 'package:todo/ui/register/register_controller.dart';
 import 'package:todo/ui/style/colors.dart';
 import 'package:todo/ui/widgets/app_bar_widget.dart';
 import 'package:todo/ui/widgets/input_widget.dart';
 import 'package:todo/ui/widgets/primary_button.dart';
-import '../locale_keys.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -13,10 +16,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _loginController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +29,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               AppBarWidget(),
-              Expanded(child: _body()),
+              ChangeNotifierProvider<RegisterController>(
+                create: (context) => RegisterController(),
+                child: Consumer<RegisterController>(
+                  builder: (context, controller, child) {
+                    return Expanded(child: _body(controller));
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -38,7 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _body() {
+  Widget _body(RegisterController controller) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -61,17 +67,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InputWidget(
-                  controller: _loginController,
+                  controller: controller.loginController,
                   type: InputWidgetType.login,
                 ),
                 SizedBox(height: 32),
                 InputWidget(
-                  controller: _emailController,
+                  controller: controller.emailController,
                   type: InputWidgetType.email,
                 ),
                 SizedBox(height: 32),
                 InputWidget(
-                  controller: _passwordController,
+                  controller: controller.passwordController,
                   type: InputWidgetType.password,
                 ),
               ],
@@ -79,7 +85,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           PrimaryButton(
             text: "Register",
-            onPressed: () {},
+            onPressed: () async {
+              if (await controller.register()) Get.off(() => HomeScreen());
+            },
             large: true,
           ),
           Row(

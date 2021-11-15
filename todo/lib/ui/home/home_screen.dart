@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo/mock/mock.dart';
+import 'package:todo/repositories/user/profile_repository.dart';
 import 'package:todo/ui/style/colors.dart';
+import 'package:todo/ui/widgets/shrink_tap.dart';
 import 'home_screen_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -75,7 +78,13 @@ class _TasksListState extends State<TasksList> {
         child: Column(children: [
           Align(
             alignment: Alignment.centerRight,
-            child: Text("+"),
+            child: ShrinkTap(
+              child: Text("+"),
+              onTap: () {
+                print("ON TAP");
+                Get.find<ProfileRepository>().logout();
+              },
+            ),
           ),
           Column(
             children: MockData.tasksList()

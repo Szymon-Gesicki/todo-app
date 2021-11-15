@@ -4,7 +4,7 @@ import 'package:get/instance_manager.dart';
 import 'package:todo/controller/keys_controller.dart';
 import 'package:todo/repositories/user/profile_repository.dart';
 import 'package:todo/ui/home/home_screen.dart';
-import 'package:todo/ui/login_screen.dart';
+import 'package:todo/ui/login/login_screen.dart';
 import 'package:todo/ui/started_screen.dart';
 
 class SplashScreen extends StatefulWidget {
