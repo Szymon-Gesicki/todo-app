@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo/mock/mock.dart';
 import 'package:todo/repositories/user/profile_repository.dart';
+import 'package:todo/ui/home/task_list.dart';
 import 'package:todo/ui/style/colors.dart';
 import 'package:todo/ui/widgets/shrink_tap.dart';
 import 'home_screen_app_bar.dart';
@@ -48,52 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(height: 10),
           TasksList(),
         ],
-      ),
-    );
-  }
-}
-
-class TasksList extends StatefulWidget {
-  @override
-  _TasksListState createState() => _TasksListState();
-}
-
-class _TasksListState extends State<TasksList> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.gray,
-            blurRadius: 10,
-          )
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(children: [
-          Align(
-            alignment: Alignment.centerRight,
-            child: ShrinkTap(
-              child: Text("+"),
-              onTap: () {
-                print("ON TAP");
-                Get.find<ProfileRepository>().logout();
-              },
-            ),
-          ),
-          Column(
-            children: MockData.tasksList()
-                .map(
-                  (e) => Text(e),
-                )
-                .toList(),
-          ),
-        ]),
       ),
     );
   }

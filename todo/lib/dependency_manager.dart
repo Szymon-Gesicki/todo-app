@@ -1,10 +1,12 @@
 import 'package:get/instance_manager.dart';
 import 'package:todo/controller/keys_controller.dart';
 import 'package:todo/controller/storage_service.dart';
+import 'package:todo/network/task_client.dart';
 import 'package:todo/network/todo_client.dart';
 import 'package:todo/repositories/user/profile_repository.dart';
 import 'package:todo/repositories/user/secure_storage.dart';
 import 'package:todo/repositories/user/user_manager.dart';
+import 'package:todo/ui/repositories/task_repository.dart';
 
 class DependencyManager {
   static final instance = DependencyManager();
@@ -18,7 +20,9 @@ class DependencyManager {
     Get.put(UserManager());
 
     Get.put(TodoClient());
+    Get.put(TaskClient());
 
     Get.put(ProfileRepository());
+    Get.put(TaskRepository());
   }
 }
