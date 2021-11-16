@@ -25,7 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              HomeScreenAppBar(),
+              HomeScreenAppBar(
+                onLogout: () {
+                  print("LOGOUT");
+                  Get.find<ProfileRepository>().logout();
+                },
+              ),
               Expanded(child: _body()),
             ],
           ),

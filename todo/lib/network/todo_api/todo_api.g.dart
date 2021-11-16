@@ -85,11 +85,11 @@ class _TodoApi implements TodoApi {
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<LoginResponse>(Options(
-                method: 'PATCH', headers: <String, dynamic>{}, extra: _extra)
-            .compose(_dio.options, 'api/task/$id/',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<LoginResponse>(
+            Options(method: 'PUT', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'api/task/$id/',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = LoginResponse.fromJson(_result.data!);
     return value;
   }

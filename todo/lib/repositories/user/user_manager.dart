@@ -21,7 +21,7 @@ class UserManager {
   }
 
   void saveAuthToken(String? token) async {
-    this._token = token;
     await Get.find<SecureStorage>().saveAuthToken(token);
+    _token = await Get.find<SecureStorage>().getAuthToken();
   }
 }

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:todo/network/task_client.dart';
+import 'package:todo/repositories/user/profile_repository.dart';
 import 'package:todo/ui/repositories/resource.dart';
 import 'package:todo/ui/repositories/task.dart';
 
@@ -38,6 +39,30 @@ class TaskRepository {
     if (_tasksStream.hasListener) {
       await reloadTasks();
     }
+  }
+
+  Future<SimpleResult> addTask(Task task) async {
+    final result = await Get.find<TaskClient>().addTask(task);
+
+    if (result.success) {
+      reloadTasks();
+    }
+
+    return result;
+  }
+
+  Future<SimpleResult> markAsDone(Task task) async {
+    final result = await Get.find<TaskClient>().update(Task(
+        name: task.name,
+        createDate: task.createDate,
+        isDone: !task.isDone,
+        pk: task.pk));
+
+    if (result.success) {
+      reloadTasks();
+    }
+
+    return result;
   }
 
   void close() {

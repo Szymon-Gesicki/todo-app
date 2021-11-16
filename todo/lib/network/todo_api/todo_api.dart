@@ -24,9 +24,9 @@ abstract class TodoApi {
   @POST("api/task/")
   Future<TaskModel> addTask(@Body() TaskModel request);
 
-  @PATCH("api/task/{id}/")
+  @PUT("api/task/{id}/")
   Future<LoginResponse> updateTask(
-      @Path("id") String id, @Body() TaskModel request);
+      @Path("id") int id, @Body() TaskModel request);
 
   @GET("api/user/")
   Future<UserModel> getProfile();

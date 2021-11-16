@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/ui/style/colors.dart';
 
-enum InputWidgetType { email, login, password }
+enum InputWidgetType { email, login, password, name }
 
 extension InputWidgetTypeExtension on InputWidgetType {
   TextInputType inputType() {
@@ -11,6 +11,8 @@ extension InputWidgetTypeExtension on InputWidgetType {
       case InputWidgetType.login:
         return TextInputType.name;
       case InputWidgetType.password:
+        return TextInputType.name;
+      case InputWidgetType.name:
         return TextInputType.name;
     }
   }
@@ -23,6 +25,8 @@ extension InputWidgetTypeExtension on InputWidgetType {
         return "Login";
       case InputWidgetType.password:
         return "Password";
+      case InputWidgetType.name:
+        return "Name";
     }
   }
 }

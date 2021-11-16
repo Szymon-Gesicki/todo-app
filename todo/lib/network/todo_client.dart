@@ -34,7 +34,9 @@ class TodoClient {
           handler.next(e);
         },
         onRequest: (r, handler) {
+          print("ADD TOKEN");
           final token = _userManager.getAuthToken();
+          print("TOKEN ${token}");
           if (token != null) r.headers['Authorization'] = token;
           handler.next(r);
         },
