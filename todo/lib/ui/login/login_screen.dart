@@ -11,12 +11,7 @@ import 'package:todo/ui/widgets/app_bar_widget.dart';
 import 'package:todo/ui/widgets/input_widget.dart';
 import 'package:todo/ui/widgets/primary_button.dart';
 
-class LoginScreen extends StatefulWidget {
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 create: (context) => LoginController(),
                 child: Consumer<LoginController>(
                   builder: (context, controller, child) {
-                    return Expanded(child: _body(controller));
+                    return Expanded(child: _body(controller, context));
                   },
                 ),
               ),
@@ -45,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _body(LoginController controller) {
+  Widget _body(LoginController controller, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(

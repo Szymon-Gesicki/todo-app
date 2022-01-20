@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:todo/ui/home/add_alert.dart';
+import 'package:todo/ui/home/task_item.dart';
 import 'package:todo/ui/repositories/resource.dart';
 import 'package:todo/ui/repositories/task.dart';
 import 'package:todo/ui/repositories/task_repository.dart';
 import 'package:todo/ui/style/colors.dart';
 import 'package:todo/ui/widgets/shrink_tap.dart';
 
-class TasksList extends StatefulWidget {
-  @override
-  _TasksListState createState() => _TasksListState();
-}
-
-class _TasksListState extends State<TasksList> {
+class TasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,13 +36,14 @@ class _TasksListState extends State<TasksList> {
               switch (resource.state) {
                 case ResourceState.loading:
                   if ((resource.data ?? []).isNotEmpty)
-                    return _body(_buildData(resource.data!), isLoading: true);
+                    return _body(_buildData(resource.data!), context,
+                        isLoading: true);
                   else
-                    return _body(Container(), isLoading: true);
+                    return _body(Container(), context, isLoading: true);
                 case ResourceState.error:
-                  return _body(_buildError(resource.localizedError));
+                  return _body(_buildError(resource.localizedError), context);
                 case ResourceState.success:
-                  return _body(_buildData(resource.successData));
+                  return _body(_buildData(resource.successData), context);
               }
             },
           ),
@@ -85,7 +81,7 @@ class _TasksListState extends State<TasksList> {
     );
   }
 
-  Widget _body(Widget child, {bool isLoading = false}) {
+  Widget _body(Widget child, BuildContext context, {bool isLoading = false}) {
     return Stack(
       children: [
         Row(
@@ -110,7 +106,7 @@ class _TasksListState extends State<TasksList> {
                     .copyWith(color: AppColors.primaryColor),
               ),
               onTap: () {
-                _presentAddAlert();
+                _presentAddAlert(context);
               },
             ),
           ],
@@ -125,54 +121,10 @@ class _TasksListState extends State<TasksList> {
     );
   }
 
-  void _presentAddAlert() {
+  void _presentAddAlert(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AddAlert(),
-    );
-  }
-}
-
-class TaskItem extends StatefulWidget {
-  final Task task;
-
-  TaskItem({required this.task});
-
-  @override
-  _TaskItemState createState() => _TaskItemState();
-}
-
-class _TaskItemState extends State<TaskItem> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          ShrinkTap(
-            onTap: () {
-              Get.find<TaskRepository>().markAsDone(widget.task);
-            },
-            child: Container(
-              height: 15,
-              width: 15,
-              decoration: BoxDecoration(
-                  color: widget.task.isDone
-                      ? AppColors.primaryColor
-                      : Colors.white,
-                  border: Border.all(color: Colors.black, width: 2)),
-            ),
-          ),
-          SizedBox(width: 20),
-          Text(
-            widget.task.name,
-            style: Theme.of(context).textTheme.headline4!.copyWith(
-                decoration: widget.task.isDone
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none),
-          ),
-        ],
-      ),
     );
   }
 }

@@ -34,9 +34,7 @@ class TodoClient {
           handler.next(e);
         },
         onRequest: (r, handler) {
-          print("ADD TOKEN");
           final token = _userManager.getAuthToken();
-          print("TOKEN ${token}");
           if (token != null) r.headers['Authorization'] = token;
           handler.next(r);
         },
@@ -48,7 +46,7 @@ class TodoClient {
 
     if (kDebugMode) {
       dio.interceptors
-          .add(LogInterceptor(responseBody: true, requestBody: false));
+          .add(LogInterceptor(responseBody: true, requestBody: true));
     }
   }
 }

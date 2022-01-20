@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/ui/home/home_screen.dart';
-import 'package:todo/ui/login/login_controller.dart';
 import 'package:todo/ui/register/register_controller.dart';
 import 'package:todo/ui/style/colors.dart';
 import 'package:todo/ui/widgets/app_bar_widget.dart';
 import 'package:todo/ui/widgets/input_widget.dart';
 import 'package:todo/ui/widgets/primary_button.dart';
 
-class RegisterScreen extends StatefulWidget {
-  @override
-  _RegisterScreenState createState() => _RegisterScreenState();
-}
-
-class _RegisterScreenState extends State<RegisterScreen> {
+class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 create: (context) => RegisterController(),
                 child: Consumer<RegisterController>(
                   builder: (context, controller, child) {
-                    return Expanded(child: _body(controller));
+                    return Expanded(child: _body(controller, context));
                   },
                 ),
               ),
@@ -44,7 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _body(RegisterController controller) {
+  Widget _body(RegisterController controller, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(

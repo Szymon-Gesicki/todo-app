@@ -11,7 +11,7 @@ class AvatarWigetController extends GetxController {
   }
 
   void init() {
-    // TODO DOWLOAND IMAGE
+    // TODO IMAGE
     Future.delayed(Duration(milliseconds: 1000), () {
       isLoading.value = false;
     });

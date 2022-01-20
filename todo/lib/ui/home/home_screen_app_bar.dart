@@ -6,16 +6,10 @@ import 'package:todo/ui/widgets/shrink_tap.dart';
 
 import 'avatar/avatar_widget.dart';
 
-class HomeScreenAppBar extends StatefulWidget {
+class HomeScreenAppBar extends StatelessWidget {
   final VoidCallback onLogout;
 
   HomeScreenAppBar({required this.onLogout});
-
-  @override
-  _HomeScreenAppBarState createState() => _HomeScreenAppBarState();
-}
-
-class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBarWidget(
@@ -32,8 +26,7 @@ class _HomeScreenAppBarState extends State<HomeScreenAppBar> {
               style: Theme.of(context).textTheme.headline6,
             ),
             onTap: () {
-              print("ON TAP");
-              widget.onLogout();
+              onLogout();
             },
           ),
           SizedBox(height: 10),

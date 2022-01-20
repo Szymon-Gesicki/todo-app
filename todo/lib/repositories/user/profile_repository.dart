@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -54,9 +55,9 @@ class ProfileRepository {
       if (e.error is SocketException) {
         return SimpleResult.createFailed("error_check_internet");
       }
-      return SimpleResult.createFailed("unknown_error");
+      return SimpleResult.createFailed("Unknown error");
     } on Exception catch (e) {
-      return SimpleResult.createFailed("unknown error");
+      return SimpleResult.createFailed("Unknown error");
     }
   }
 
@@ -69,13 +70,37 @@ class ProfileRepository {
       return SimpleResult.createEmptySuccess();
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
-        return SimpleResult.createFailed("failure_on_register");
+        return SimpleResult.createFailed("Incorrect credentials");
       }
 
       if (e.error is SocketException) {
-        return SimpleResult.createFailed("error_check_internet");
+        return SimpleResult.createFailed("Check internet");
       }
-      return SimpleResult.createFailed("unknown_error");
+
+      if (e.response != null) {
+        print("result");
+
+        Map<String, dynamic> result = jsonDecode(e.response.toString());
+
+        final email = result["email"];
+        final password = result["password1"];
+        final username = result["username"];
+
+        if (username != null) {
+          return SimpleResult.createFailed(username[0] as String);
+        }
+        if (email != null) {
+          return SimpleResult.createFailed(email[0] as String);
+        }
+
+        if (password != null) {
+          return SimpleResult.createFailed(password[0] as String);
+        }
+
+        return SimpleResult.createFailed("Unknown error");
+      } else {
+        return SimpleResult.createFailed("Unknown error");
+      }
     }
   }
 
@@ -84,7 +109,7 @@ class ProfileRepository {
       final response = await _todoApi.getProfile();
       return SimpleResult.createSuccess(UserMapper.fromNetwork(response));
     } on DioError catch (e) {
-      return SimpleResult.createFailed("unknown_error");
+      return SimpleResult.createFailed("Unknown error");
     }
   }
 
